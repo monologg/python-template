@@ -1,20 +1,34 @@
 clean: clean-pyc clean-test
 quality: set-style-dep check-quality
 style: set-style-dep set-style
+setup: set-precommit set-style-dep set-test-dep set-git
+test: set-test-dep set-test
+
+PYTHON=3.8
+BASENAME=$(shell basename $(CURDIR))
 
 ##### basic #####
+conda-env:
+	conda create -n $(BASENAME)  python=$(PYTHON)
+
+set-precommit:
+	pip3 install pre-commit==2.17.0
+	pre-commit install
+
+set-style-dep:
+	pip3 install isort==5.9.3 black==21.7b0 flake8==3.9.2
+
 set-git:
 	git config --local commit.template .gitmessage
 
 set-dev:
 	pip3 install -r requirements.txt
 
-test:
+set-test-dep:
 	pip3 install pytest==6.2.4
-	python3 -m pytest tests/
 
-set-style-dep:
-	pip3 install isort==5.9.3 black==21.7b0 flake8==3.9.2
+set-test:
+	python3 -m pytest tests/
 
 set-style:
 	black --config pyproject.toml .
