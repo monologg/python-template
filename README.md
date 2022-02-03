@@ -25,23 +25,15 @@ Template repository for KotterAI
 
 ## 📄 Guideline
 
-### 1. Set commit template
+### 1. Setup
 
-Please follow the instruction in `.gitmessage` when commit.
-
-```bash
-make set-git
-```
-
-### 2. Install dependencies
-
-Will install `requirements.txt`
+- precommit, style, pytest, gitmessage, requirements
 
 ```bash
-make set-dev
+make setup
 ```
 
-### 3. Writes your own code! ✏️
+### 2. Writes your own code! ✏️
 
 Don't forget to update the `README`!
 
