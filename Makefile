@@ -9,7 +9,7 @@ BASENAME=$(shell basename $(CURDIR))
 
 ##### basic #####
 conda-env:
-	conda create -n $(BASENAME)  python=$(PYTHON)
+	conda create -n $(BASENAME) python=$(PYTHON)
 
 set-precommit:
 	pip3 install pre-commit==2.17.0
