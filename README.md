@@ -1,6 +1,6 @@
 # Python Template
 
-Template repository for KotterAI
+Template repository for Python project
 
 ## 🚀 Features
 
