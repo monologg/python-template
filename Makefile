@@ -28,7 +28,7 @@ set-precommit:
 
 set-style-dep:
 	$(CONDA_ACTIVATE) $(BASENAME)
-	pip3 install isort==5.9.3 black==21.7b0 flake8==3.9.2
+	pip3 install click==8.0.4 isort==5.9.3 black==21.7b0 flake8==3.9.2
 
 set-git:
 	git config --local commit.template .gitmessage
