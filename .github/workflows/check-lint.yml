@@ -29,4 +29,4 @@ jobs:
           python3 -m pip install --upgrade pip
       - name: Check Lint (black, flake8, isort)
         run: |
-          make ci-check-quality
+          make quality
