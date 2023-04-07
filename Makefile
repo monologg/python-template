@@ -10,7 +10,7 @@ set-git:
 	git config --local commit.template .gitmessage
 
 set-style-dep:
-	pip3 install isort==5.10.1 black==22.3.0 flake8==4.0.1
+	pip3 install isort==5.12.0 black==23.3.0 flake8==4.0.1
 
 set-test-dep:
 	pip3 install pytest==7.0.1
