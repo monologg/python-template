@@ -7,7 +7,9 @@
 # Wrap at 72 chars. ################################## which is here: #
 
 #   feat    : 기능 (새로운 기능)
-#   fix     : 버그 (버그 수정)
+#   fix      : 버그 (버그 수정)
+#   dep     : 디펜던시 수정 관련 (requirements)
+#   ci      : ci,cd 관련
 #   refactor: 리팩토링
 #   style   : 스타일 (코드 형식, 세미콜론 추가: 비즈니스 로직에 변경 없음)
 #   docs    : 문서 (문서 추가, 수정, 삭제)
