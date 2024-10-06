@@ -6,9 +6,7 @@ Template repository for Python project
 
 ### Code Quality
 
-- black
-- isort
-- flake8
+- ruff (black, isort, flake8)
 - editorconfig
 
 ### Github Actions

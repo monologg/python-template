@@ -10,13 +10,13 @@ set-git:
 	git config --local commit.template .gitmessage
 
 set-style-dep:
-	pip3 install isort==5.12.0 black==23.3.0 flake8==4.0.1
+	pip3 install ruff==0.6.8
 
 set-test-dep:
-	pip3 install pytest==7.0.1
+	pip3 install pytest==8.3.2
 
 set-precommit:
-	pip3 install pre-commit==2.17.0
+	pip3 install pre-commit==3.8.0
 	pre-commit install
 
 set-dev:
@@ -26,14 +26,12 @@ set-test:
 	python3 -m pytest tests/
 
 set-style:
-	black --config pyproject.toml .
-	isort --settings-path pyproject.toml .
-	flake8 .
+	ruff check --fix .
+	ruff format .
 
 check-quality:
-	black --config pyproject.toml --check .
-	isort --settings-path pyproject.toml --check-only .
-	flake8 .
+	ruff check .
+	ruff format --check .
 
 #####  clean  #####
 clean-pyc:
@@ -47,3 +45,4 @@ clean-test:
 	rm -f .coverage.*
 	rm -rf .pytest_cache
 	rm -rf .mypy_cache
+	rm -rf .ruff_cache
