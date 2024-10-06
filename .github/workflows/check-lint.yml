@@ -7,26 +7,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.8
+          python-version: "3.11"
 
-      - name: Cache pip
-        uses: actions/cache@v2
-        with:
-          # This path is specific to Ubuntu
-          path: ~/.cache/pip
-          # Look to see if there is a cache hit for the corresponding requirements file
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements-dev.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-            ${{ runner.os }}-
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
-      - name: Check Lint (black, flake8, isort)
+
+      - name: Check Lint
         run: |
           make quality
