@@ -1,8 +1,9 @@
-clean: clean-pyc clean-test
+clean: clean-pyc clean-test clean-uv clean-lint-and-formatter clean-branches
 quality: set-style-dep check-quality
 style: set-style-dep set-style
-setup: set-precommit set-style-dep set-test-dep set-git set-dev
+setup: set-git set-dev set-style-dep set-test-dep set-precommit
 test: set-test-dep set-test
+test-integration: set-test-dep set-test-integration
 
 
 ##### basic #####
@@ -10,28 +11,36 @@ set-git:
 	git config --local commit.template .gitmessage
 
 set-style-dep:
-	pip3 install ruff==0.6.8
+	uv sync --only-group quality --frozen --no-install-project --inexact
 
+# --group (not --only-group) so `make test` also installs the default dependencies and works on a fresh checkout
 set-test-dep:
-	pip3 install pytest==8.3.2
+	uv sync --group test --frozen --no-install-project --inexact
 
 set-precommit:
-	pip3 install pre-commit==3.8.0
-	pre-commit install
+	uv run --frozen --only-group quality pre-commit install
 
 set-dev:
-	pip3 install -r requirements.txt
+	uv sync --frozen --no-install-project
 
 set-test:
-	python3 -m pytest tests/
+	uv run --frozen --group test pytest --cov --cov-report=term-missing tests/
+
+set-test-integration:
+	uv run --frozen --group test pytest -m integration tests/; \
+	status=$$?; \
+	if [ $$status -eq 5 ]; then echo "No integration tests collected"; exit 0; else exit $$status; fi
 
 set-style:
-	ruff check --fix .
-	ruff format .
+	uv run --frozen --only-group quality ruff check --fix .
+	uv run --frozen --only-group quality ruff format .
 
 check-quality:
-	ruff check .
-	ruff format --check .
+	uv run --frozen --only-group quality ruff check .
+	uv run --frozen --only-group quality ruff format --check .
+
+check-lock:
+	uv lock --check
 
 #####  clean  #####
 clean-pyc:
@@ -45,4 +54,14 @@ clean-test:
 	rm -f .coverage.*
 	rm -rf .pytest_cache
 	rm -rf .mypy_cache
+
+clean-lint-and-formatter:
 	rm -rf .ruff_cache
+
+clean-uv:
+	uv cache clean
+	uv cache prune
+
+clean-branches:
+	git fetch --prune origin
+	git branch -vv | grep ': gone]' | awk '{print $$1}' | xargs -r git branch -D
