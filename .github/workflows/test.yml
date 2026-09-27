@@ -1,0 +1,38 @@
+name: test
+
+on: [pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+jobs:
+  run-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.11.28"
+
+      - name: Set up Python in pyproject.toml
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Run tests
+        run: |
+          make test
+
+      # PRs from forks get no secrets, so integration tests run only on same-repo PRs into the default branch
+      # and on manual runs. If they need secrets, pass them here with `env:` — never switch to pull_request_target.
+      - name: Run integration tests
+        if: >-
+          github.event_name == 'workflow_dispatch' ||
+          (github.base_ref == github.event.repository.default_branch &&
+           github.event.pull_request.head.repo.full_name == github.repository)
+        run: |
+          make test-integration

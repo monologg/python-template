@@ -1,7 +1,7 @@
-## Description
+## Summary
 
-<!-- Add a more detailed description of the changes if needed. -->
+<!-- What changed and why, 1-3 bullets. Link the related issue, if any. -->
 
-## Related Issue
+## Test plan
 
-<!-- If your PR refers to a related issue, link it here. -->
+<!-- Commands actually run and their result (e.g. make quality, make test). List follow-ups left out of this PR. -->

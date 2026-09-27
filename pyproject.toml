@@ -1,5 +1,29 @@
+[project]
+name = "python-template"
+version = "0.1.0"
+description = "python-template"
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = []
+
+[dependency-groups]
+test = ["pytest==9.1.1", "pytest-sugar==1.1.1", "pytest-cov==7.1.0"]
+quality = ["pre-commit==4.6.0", "ruff==0.15.21"]
+
+[tool.pytest]
+addopts = ["-ra", "-v", "-l", "-m", "not integration"]
+markers = [
+  "integration: tests that call real external dependencies (DB, external APIs, LLMs, ...)",
+]
+
+[tool.coverage.run]
+# The package to measure with `pytest --cov`. Rename it together with the package.
+source = ["python_template"]
+
 [tool.ruff]
 line-length = 119
+# Respect exclude even for paths passed explicitly (pre-commit hooks)
+force-exclude = true
 
 # Exclude the following files and directories.
 exclude = [
