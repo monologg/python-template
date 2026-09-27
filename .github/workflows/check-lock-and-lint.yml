@@ -1,0 +1,32 @@
+name: check-lock-and-lint
+
+on: [pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  check-lock-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.11.28"
+
+      - name: Set up Python in pyproject.toml
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Validate uv.lock
+        run: |
+          uv lock --check
+
+      - name: Check Lint (ruff)
+        run: |
+          make quality
